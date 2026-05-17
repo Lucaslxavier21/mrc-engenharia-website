@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MRC Engenharia | Pinturas Prediais e Serviços de Engenharia</title>
+<meta name="description" content="MRC Engenharia - Especialistas em pinturas prediais, restauro de fachadas, impermeabilização e trabalho em altura para condomínios e imóveis comerciais em São Paulo.">
+<meta property="og:title" content="MRC Engenharia | Pinturas Prediais">
+<meta property="og:description" content="Especialistas em fachadas, condomínios e imóveis comerciais">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#C0392B;--black:#1A1A1A;--dark:#3D3D3D;--white:#FFFFFF;--light:#F5F5F5;--footer:#0D0D0D}
+html{scroll-behavior:smooth}
+body{font-family:'Open Sans',sans-serif;color:var(--black);line-height:1.6;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+h1,h2,h3,h4,h5,h6{font-family:'Montserrat',sans-serif}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;height:auto;-webkit-user-drag:none;user-select:none}
+input,textarea,select{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+/* HEADER */
+.header{position:fixed;top:0;left:0;width:100%;background:var(--white);z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,.08);transition:all .3s}
+.header .container{display:flex;align-items:center;justify-content:space-between;height:75px}
+.header .logo img{height:65px}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{font-family:'Montserrat',sans-serif;font-weight:600;font-size:.9rem;color:var(--black);transition:color .3s;text-transform:uppercase;letter-spacing:.5px}
+.nav-links a:hover{color:var(--red)}
+.header-phone{display:flex;align-items:center;gap:8px;color:var(--red);font-weight:700;font-size:.95rem}
+.header-phone i{font-size:1.2rem;color:#25D366}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:5px}
+.hamburger span{display:block;width:25px;height:3px;background:var(--black);border-radius:2px;transition:all .3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,6px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-6px)}
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;background:url('img/hero.jpg') center/cover no-repeat;margin-top:0}
+.hero::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.55)}
+.hero-content{position:relative;z-index:2;text-align:center;color:var(--white);max-width:800px;padding:0 20px}
+.hero h1{font-size:3rem;font-weight:800;margin-bottom:16px;line-height:1.15}
+.hero p{font-size:1.25rem;margin-bottom:32px;opacity:.9}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:14px 32px;border-radius:4px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .3s;border:2px solid transparent;text-transform:uppercase;letter-spacing:.5px}
+.btn-red{background:var(--red);color:var(--white);border-color:var(--red)}
+.btn-red:hover{background:#a93226;border-color:#a93226}
+.btn-outline{background:transparent;color:var(--white);border-color:var(--white)}
+.btn-outline:hover{background:var(--white);color:var(--black)}
+/* SECTIONS */
+.section{padding:80px 0}
+.section-title{text-align:center;margin-bottom:48px}
+.section-title h2{font-size:2.2rem;font-weight:800;margin-bottom:8px;position:relative;display:inline-block}
+.section-title h2::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:60px;height:3px;background:var(--red)}
+.section-title p{color:var(--dark);margin-top:16px;font-size:1.05rem}
+/* QUEM SOMOS */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.about-text h2{font-size:2rem;font-weight:800;margin-bottom:20px}
+.about-text h2::after{content:'';display:block;width:60px;height:3px;background:var(--red);margin-top:10px}
+.about-text p{color:var(--dark);font-size:1.05rem;line-height:1.8}
+.about-img{border-radius:8px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+.about-img img{width:100%;height:100%;object-fit:cover;display:block}
+.diff-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
+.diff-card{text-align:center;padding:24px 16px;background:var(--light);border-radius:8px;transition:transform .3s,box-shadow .3s}
+.diff-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.diff-card .icon{font-size:2.2rem;margin-bottom:12px}
+.diff-card h4{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem}
+/* SERVIÇOS */
+.services-bg{background:var(--light)}
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.service-card{background:var(--white);padding:32px 24px;border-radius:8px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.06);transition:transform .3s,box-shadow .3s;border-top:3px solid transparent}
+.service-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(0,0,0,.12);border-top-color:var(--red)}
+.service-card .svc-icon{font-size:2.5rem;color:var(--red);margin-bottom:16px}
+.service-card h3{font-size:1.1rem;font-weight:700;margin-bottom:12px}
+.service-card p{font-size:.9rem;color:var(--dark);line-height:1.7}
+.services-cta{text-align:center;margin-top:40px}
+/* OBRAS */
+.obras-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.obra-item{position:relative;overflow:hidden;border-radius:8px;cursor:pointer;aspect-ratio:4/3}
+.obra-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.obra-item:hover img{transform:scale(1.08)}
+.obra-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
+.obra-item:hover .obra-overlay{opacity:1}
+.obra-overlay span{color:var(--white);font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem;text-align:center;padding:8px}
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:2000;align-items:center;justify-content:center}
+.lightbox.active{display:flex}
+.lightbox img{max-width:90%;max-height:85vh;border-radius:4px}
+.lightbox-close{position:absolute;top:20px;right:30px;color:var(--white);font-size:2rem;cursor:pointer;z-index:2001}
+/* CONTATO */
+.contact-section{background:var(--black);color:var(--white)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.contact-form{display:flex;flex-direction:column;gap:16px}
+.contact-form input,.contact-form select,.contact-form textarea{width:100%;padding:14px 16px;border:1px solid #444;border-radius:4px;background:#2a2a2a;color:var(--white);font-family:'Open Sans',sans-serif;font-size:.95rem;transition:border-color .3s}
+.contact-form input:focus,.contact-form select:focus,.contact-form textarea:focus{outline:none;border-color:var(--red)}
+.contact-form textarea{min-height:120px;resize:vertical}
+.contact-form select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:20px}
+.contact-form select option{background:#2a2a2a;color:var(--white)}
+.btn-whatsapp{background:#25D366;color:var(--white);border-color:#25D366;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+.btn-whatsapp:hover{background:#1fba59}
+.contact-info{display:flex;flex-direction:column;gap:24px}
+.contact-info-item{display:flex;align-items:center;gap:14px;font-size:1.05rem}
+.contact-info-item i{font-size:1.4rem;color:var(--red);width:24px;text-align:center}
+.social-links{display:flex;gap:16px;margin-top:8px}
+.social-links a{width:44px;height:44px;border-radius:50%;border:2px solid var(--red);display:flex;align-items:center;justify-content:center;color:var(--white);transition:all .3s}
+.social-links a:hover{background:var(--red);border-color:var(--red)}
+/* FOOTER */
+.footer{background:var(--footer);color:#aaa;text-align:center;padding:40px 0}
+.footer .logo img{height:50px;margin-bottom:16px;filter:brightness(2)}
+.footer-links{display:flex;gap:24px;justify-content:center;list-style:none;margin-bottom:16px;flex-wrap:wrap}
+.footer-links a{color:#aaa;font-size:.9rem;transition:color .3s}
+.footer-links a:hover{color:var(--white)}
+.footer p{font-size:.85rem;margin-top:8px}
+/* WHATSAPP FLOAT */
+.whatsapp-float{position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:999;transition:transform .3s}
+.whatsapp-float:hover{transform:scale(1.1)}
+.whatsapp-float i{color:var(--white);font-size:1.8rem}
+/* ANIMATIONS */
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+/* RESPONSIVE */
+@media(max-width:1024px){
+.services-grid{grid-template-columns:repeat(2,1fr)}
+.diff-cards{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+.nav-links{position:fixed;top:75px;left:0;width:100%;background:var(--white);flex-direction:column;padding:20px;gap:16px;box-shadow:0 4px 10px rgba(0,0,0,.1);transform:translateY(-120%);transition:transform .3s;z-index:999}
+.nav-links.active{transform:translateY(0)}
+.hamburger{display:flex}
+.header-phone{display:none}
+.hero h1{font-size:2rem}
+.hero p{font-size:1rem}
+.about-grid{grid-template-columns:1fr}
+.contact-grid{grid-template-columns:1fr}
+.obras-grid{grid-template-columns:repeat(2,1fr)}
+.diff-cards{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+.obras-grid{grid-template-columns:1fr}
+.services-grid{grid-template-columns:1fr}
+.diff-cards{grid-template-columns:1fr}
+.hero h1{font-size:1.7rem}
+.btn{padding:12px 24px;font-size:.85rem}
+}
+</style>
+</head>
+<body>
+<!-- HEADER -->
+<header class="header" id="home">
+<div class="container">
+<a href="#home" class="logo"><img src="img/logo.png" alt="MRC Engenharia"></a>
+<nav>
+<ul class="nav-links" id="navLinks">
+<li><a href="#home">Home</a></li>
+<li><a href="#quem-somos">Quem Somos</a></li>
+<li><a href="#servicos">Serviços</a></li>
+<li><a href="#obras">Nossas Obras</a></li>
+<li><a href="#contato">Contato</a></li>
+</ul>
+</nav>
+<a href="https://wa.me/5511947830301" class="header-phone" target="_blank">
+<i class="fab fa-whatsapp"></i> (11) 94783-0301
+</a>
+<button class="hamburger" id="hamburger" aria-label="Menu">
+<span></span><span></span><span></span>
+</button>
+</div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero-section">
+<div class="hero-content">
+<h1>Pinturas e Serviços Prediais com Qualidade e Garantia</h1>
+<p>Especialistas em fachadas, condomínios e imóveis comerciais</p>
+<div class="hero-btns">
+<a href="#contato" class="btn btn-red">Solicitar Orçamento</a>
+<a href="#servicos" class="btn btn-outline">Conheça Nossos Serviços</a>
+</div>
+</div>
+</section>
+
+<!-- QUEM SOMOS -->
+<section class="section" id="quem-somos">
+<div class="container">
+<div class="about-grid fade-in">
+<div class="about-text">
+<h2>Qualidade e Agilidade em Cada Projeto</h2>
+<p>A MRC Engenharia atua no mercado de pinturas prediais e serviços de engenharia para condomínios, imóveis comerciais e residenciais de alto padrão. Nossa equipe de profissionais qualificados executa cada serviço com precisão técnica, seguindo todas as normas de segurança.</p>
+</div>
+<div class="about-img">
+<img src="img/quem-somos.jpg" alt="Profissional MRC Engenharia pintando fachada" loading="lazy">
+</div>
+</div>
+<div class="diff-cards fade-in">
+<div class="diff-card"><div class="icon">🏗️</div><h4>Equipe Especializada</h4></div>
+<div class="diff-card"><div class="icon">🔒</div><h4>Segurança NR-35</h4></div>
+<div class="diff-card"><div class="icon">✅</div><h4>Garantia por Escrito</h4></div>
+<div class="diff-card"><div class="icon">💳</div><h4>Parcelamento Disponível</h4></div>
+</div>
+</div>
+</section>
+
+<!-- SERVIÇOS -->
+<section class="section services-bg" id="servicos">
+<div class="container">
+<div class="section-title fade-in">
+<h2>Nossos Serviços</h2>
+</div>
+<div class="services-grid fade-in">
+<div class="service-card">
+<div class="svc-icon"><i class="fas fa-paint-roller"></i></div>
+<h3>Pintura Predial</h3>
+<p>Renovação completa de fachadas e áreas comuns de condomínios e edifícios comerciais, com tintas de alta durabilidade.</p>
+</div>
+<div class="service-card">
+<div class="svc-icon"><i class="fas fa-building"></i></div>
+<h3>Restauro de Fachada</h3>
+<p>Recuperação estrutural e estética da fachada, incluindo tratamento de trincas, revestimentos e acabamentos.</p>
+</div>
+<div class="service-card">
+<div class="svc-icon"><i class="fas fa-tint-slash"></i></div>
+<h3>Impermeabilização</h3>
+<p>Aplicação de sistemas impermeabilizantes para proteção contra infiltrações em lajes, terraços e subsolos.</p>
+</div>
+<div class="service-card">
+<div class="svc-icon"><i class="fas fa-hard-hat"></i></div>
+<h3>Trabalho em Altura</h3>
+<p>Execução de serviços em fachadas com rapel e andaimes, seguindo rigorosamente as normas de segurança NR-35.</p>
+</div>
+</div>
+<div class="services-cta fade-in">
+<a href="#contato" class="btn btn-red">Solicitar Orçamento</a>
+</div>
+</div>
+</section>
+
+<!-- OBRAS -->
+<section class="section" id="obras">
+<div class="container">
+<div class="section-title fade-in">
+<h2>Nossas Obras</h2>
+<p>Confira alguns dos nossos projetos realizados</p>
+</div>
+<div class="obras-grid fade-in">
+<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-1.jpg" alt="Operários aplicando textura na fachada" loading="lazy"><div class="obra-overlay"><span>Texturização de Fachada</span></div></div>
+<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-2.jpg" alt="Proteção do piso com manta" loading="lazy"><div class="obra-overlay"><span>Proteção e Segurança</span></div></div>
+<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-3.jpg" alt="Fachada texturizada" loading="lazy"><div class="obra-overlay"><span>Acabamento de Fachada</span></div></div>
+<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-4.jpg" alt="Rapelista pintando fachada" loading="lazy"><div class="obra-overlay"><span>Pintura com Rapel</span></div></div>
+<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-5.jpg" alt="Rapelista na fachada" loading="lazy"><div class="obra-overlay"><span>Trabalho em Altura</span></div></div>
+<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-6.jpg" alt="Operários em rapel" loading="lazy"><div class="obra-overlay"><span>Rapel em Fachada</span></div></div>
+<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-7.jpg" alt="Pintor com rolo na fachada" loading="lazy"><div class="obra-overlay"><span>Pintura de Fachada</span></div></div>
+<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-8.jpg" alt="Pintura de muro externo" loading="lazy"><div class="obra-overlay"><span>Pintura Externa</span></div></div>
+</div>
+</div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+<span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+<img src="" alt="Obra MRC Engenharia" id="lightbox-img">
+</div>
+
+<!-- CONTATO -->
+<section class="section contact-section" id="contato">
+<div class="container">
+<div class="section-title fade-in">
+<h2 style="color:var(--white)">Solicite um Orçamento Gratuito</h2>
+<p style="color:#ccc">Atendemos São Paulo e Grande SP</p>
+</div>
+<div class="contact-grid fade-in">
+<form class="contact-form" id="contactForm" onsubmit="sendWhatsApp(event)">
+<input type="text" name="nome" placeholder="Nome completo" required>
+<input type="tel" name="telefone" placeholder="Telefone / WhatsApp" required>
+<input type="email" name="email" placeholder="E-mail">
+<select name="servico" required>
+<option value="" disabled selected>Tipo de Serviço</option>
+<option value="Pintura Predial">Pintura Predial</option>
+<option value="Restauro de Fachada">Restauro de Fachada</option>
+<option value="Impermeabilização">Impermeabilização</option>
+<option value="Trabalho em Altura">Trabalho em Altura</option>
+<option value="Outro">Outro</option>
+</select>
+<textarea name="mensagem" placeholder="Mensagem (opcional)"></textarea>
+<button type="submit" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Enviar pelo WhatsApp</button>
+</form>
+<div class="contact-info">
+<div class="contact-info-item"><i class="fas fa-phone-alt"></i><span>(11) 94783-0301</span></div>
+<div class="contact-info-item"><i class="fas fa-envelope"></i><span>contato@mrcengenharia.com.br</span></div>
+<div class="contact-info-item"><i class="fas fa-map-marker-alt"></i><span>São Paulo, SP</span></div>
+<div class="social-links">
+<a href="https://instagram.com/mrcengenharia" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+<a href="https://wa.me/5511947830301" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="container">
+<div class="logo"><img src="img/logo-white.png" alt="MRC Engenharia"></div>
+<ul class="footer-links">
+<li><a href="#home">Home</a></li>
+<li><a href="#quem-somos">Quem Somos</a></li>
+<li><a href="#servicos">Serviços</a></li>
+<li><a href="#obras">Nossas Obras</a></li>
+<li><a href="#contato">Contato</a></li>
+</ul>
+<p>&copy; 2025 MRC Engenharia. Todos os direitos reservados.</p>
+<p style="margin-top:4px">Desenvolvido por Lucas Lopes</p>
+</div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/5511947830301" class="whatsapp-float" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+<script>
+// ===== PROTEÇÃO ANTI-INSPEÇÃO =====
+// Bloquear clique direito
+document.addEventListener('contextmenu',function(e){e.preventDefault();return false});
+// Bloquear atalhos de teclado (F12, Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+S)
+document.addEventListener('keydown',function(e){
+if(e.key==='F12')e.preventDefault();
+if(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j'||e.key==='C'||e.key==='c'))e.preventDefault();
+if(e.ctrlKey&&(e.key==='u'||e.key==='U'||e.key==='s'||e.key==='S'))e.preventDefault();
+if(e.key==='Escape')closeLightbox();
+});
+// Desabilitar arrastar imagens
+document.addEventListener('dragstart',function(e){if(e.target.tagName==='IMG')e.preventDefault()});
+// Desabilitar seleção de texto (exceto inputs)
+document.addEventListener('selectstart',function(e){if(e.target.tagName!=='INPUT'&&e.target.tagName!=='TEXTAREA'&&e.target.tagName!=='SELECT')e.preventDefault()});
+// Detecção de DevTools via debugger
+(function(){function d(){debugger;setTimeout(d,100)}d()})();
+// Detecção de DevTools via tamanho da janela
+var dT=false;setInterval(function(){var w=window.outerWidth-window.innerWidth>160;var h=window.outerHeight-window.innerHeight>160;if(w||h){if(!dT){dT=true;document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#1A1A1A;color:#fff;font-family:Montserrat,sans-serif;text-align:center;padding:20px"><div><h1 style="font-size:2rem;margin-bottom:16px">⚠️ Acesso Bloqueado</h1><p style="color:#aaa">Ferramentas de desenvolvedor não são permitidas neste site.</p></div></div>'}}else{if(dT){dT=false;location.reload()}}},1000);
+// Bloquear console
+var c=console;Object.defineProperty(window,'console',{get:function(){return{log:function(){},warn:function(){},error:function(){},info:function(){},debug:function(){},dir:function(){}}},set:function(){}});
+
+// ===== FUNCIONALIDADES DO SITE =====
+// Hamburger
+var hamburger=document.getElementById('hamburger');
+var navLinks=document.getElementById('navLinks');
+hamburger.addEventListener('click',function(){hamburger.classList.toggle('active');navLinks.classList.toggle('active')});
+document.querySelectorAll('.nav-links a').forEach(function(l){l.addEventListener('click',function(){hamburger.classList.remove('active');navLinks.classList.remove('active')})});
+// Scroll animations
+var observer=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:0.15});
+document.querySelectorAll('.fade-in').forEach(function(el){observer.observe(el)});
+// Lightbox
+function openLightbox(el){var img=el.querySelector('img');document.getElementById('lightbox-img').src=img.src;document.getElementById('lightbox').classList.add('active');document.body.style.overflow='hidden'}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('active');document.body.style.overflow=''}
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===e.currentTarget)closeLightbox()});
+// WhatsApp form
+function sendWhatsApp(e){e.preventDefault();var f=e.target;var nome=f.nome.value;var tel=f.telefone.value;var email=f.email.value;var servico=f.servico.value;var msg=f.mensagem.value;
+var text='*Orçamento MRC Engenharia*%0A%0A*Nome:* '+encodeURIComponent(nome)+'%0A*Telefone:* '+encodeURIComponent(tel)+'%0A*E-mail:* '+encodeURIComponent(email)+'%0A*Serviço:* '+encodeURIComponent(servico);
+if(msg)text+='%0A*Mensagem:* '+encodeURIComponent(msg);
+window.open('https://wa.me/5511947830301?text='+text,'_blank')}
+// Header shadow on scroll
+window.addEventListener('scroll',function(){document.querySelector('.header').style.boxShadow=window.scrollY>50?'0 2px 20px rgba(0,0,0,.12)':'0 2px 10px rgba(0,0,0,.08)'});
+</script>
+</body>
+</html>
