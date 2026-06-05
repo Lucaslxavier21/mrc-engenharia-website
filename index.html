@@ -10,354 +10,1088 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
+/* ===== RESET & ROOT ===== */
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--red:#C0392B;--black:#1A1A1A;--dark:#3D3D3D;--white:#FFFFFF;--light:#F5F5F5;--footer:#0D0D0D}
+:root{
+  --red:#C0392B;
+  --red-light:#e74c3c;
+  --red-glow:rgba(192,57,43,0.35);
+  --black:#0D0D0D;
+  --dark:#1a1a1a;
+  --card-bg:#161616;
+  --white:#FFFFFF;
+  --light:#F8F8F8;
+  --gray:#888;
+  --border:rgba(255,255,255,0.08);
+  --glass:rgba(255,255,255,0.04);
+}
 html{scroll-behavior:smooth}
-body{font-family:'Open Sans',sans-serif;color:var(--black);line-height:1.6;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
-h1,h2,h3,h4,h5,h6{font-family:'Montserrat',sans-serif}
+body{font-family:'Inter',sans-serif;color:var(--white);background:var(--black);line-height:1.6;overflow-x:hidden;-webkit-user-select:none;user-select:none}
+h1,h2,h3,h4{font-family:'Montserrat',sans-serif}
 a{text-decoration:none;color:inherit}
-img{max-width:100%;height:auto;-webkit-user-drag:none;user-select:none}
-input,textarea,select{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}
-.container{max-width:1200px;margin:0 auto;padding:0 20px}
-/* HEADER */
-.header{position:fixed;top:0;left:0;width:100%;background:var(--white);z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,.08);transition:all .3s}
-.header .container{display:flex;align-items:center;justify-content:space-between;height:75px}
-.header .logo img{height:65px}
-.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
-.nav-links a{font-family:'Montserrat',sans-serif;font-weight:600;font-size:.9rem;color:var(--black);transition:color .3s;text-transform:uppercase;letter-spacing:.5px}
-.nav-links a:hover{color:var(--red)}
-.header-phone{display:flex;align-items:center;gap:8px;color:var(--red);font-weight:700;font-size:.95rem}
-.header-phone i{font-size:1.2rem;color:#25D366}
+img{max-width:100%;height:auto;-webkit-user-drag:none}
+input,textarea,select{-webkit-user-select:text;user-select:text}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px}
+
+/* ===== NOISE OVERLAY ===== */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:.4
+}
+
+/* ===== HEADER ===== */
+.header{
+  position:fixed;top:0;left:0;width:100%;z-index:1000;
+  transition:all .4s ease;
+  padding:0;
+}
+.header.scrolled{
+  background:rgba(13,13,13,0.92);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  box-shadow:0 4px 40px rgba(0,0,0,.5);
+}
+.header .container{display:flex;align-items:center;justify-content:space-between;height:80px}
+.logo img{height:60px;transition:filter .3s}
+.logo img:hover{filter:drop-shadow(0 0 12px var(--red-glow))}
+.nav-links{display:flex;gap:32px;list-style:none;align-items:center}
+.nav-links a{
+  font-family:'Inter',sans-serif;font-weight:600;font-size:.85rem;
+  color:rgba(255,255,255,0.75);transition:color .3s;
+  text-transform:uppercase;letter-spacing:1px;
+  position:relative;padding-bottom:4px;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:0;width:0;height:2px;
+  background:var(--red);transition:width .3s;border-radius:2px;
+}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{width:100%}
+.header-cta{
+  display:flex;align-items:center;gap:10px;
+  background:var(--red);color:var(--white);
+  padding:10px 20px;border-radius:40px;
+  font-weight:700;font-size:.85rem;
+  transition:all .3s;white-space:nowrap;
+  box-shadow:0 4px 20px var(--red-glow);
+}
+.header-cta:hover{background:var(--red-light);transform:translateY(-2px);box-shadow:0 8px 30px var(--red-glow)}
+.header-cta i{color:#25D366;font-size:1.1rem}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:5px}
-.hamburger span{display:block;width:25px;height:3px;background:var(--black);border-radius:2px;transition:all .3s}
-.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,6px)}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all .3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
 .hamburger.active span:nth-child(2){opacity:0}
-.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-6px)}
-/* HERO */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;background:url('img/hero.jpg') center/cover no-repeat;margin-top:0}
-.hero::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.55)}
-.hero-content{position:relative;z-index:2;text-align:center;color:var(--white);max-width:800px;padding:0 20px}
-.hero h1{font-size:3rem;font-weight:800;margin-bottom:16px;line-height:1.15}
-.hero p{font-size:1.25rem;margin-bottom:32px;opacity:.9}
-.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-block;padding:14px 32px;border-radius:4px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .3s;border:2px solid transparent;text-transform:uppercase;letter-spacing:.5px}
-.btn-red{background:var(--red);color:var(--white);border-color:var(--red)}
-.btn-red:hover{background:#a93226;border-color:#a93226}
-.btn-outline{background:transparent;color:var(--white);border-color:var(--white)}
-.btn-outline:hover{background:var(--white);color:var(--black)}
-/* SECTIONS */
-.section{padding:80px 0}
-.section-title{text-align:center;margin-bottom:48px}
-.section-title h2{font-size:2.2rem;font-weight:800;margin-bottom:8px;position:relative;display:inline-block}
-.section-title h2::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:60px;height:3px;background:var(--red)}
-.section-title p{color:var(--dark);margin-top:16px;font-size:1.05rem}
-/* QUEM SOMOS */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-.about-text h2{font-size:2rem;font-weight:800;margin-bottom:20px}
-.about-text h2::after{content:'';display:block;width:60px;height:3px;background:var(--red);margin-top:10px}
-.about-text p{color:var(--dark);font-size:1.05rem;line-height:1.8}
-.about-img{border-radius:8px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.15)}
-.about-img img{width:100%;height:100%;object-fit:cover;display:block}
-.diff-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
-.diff-card{text-align:center;padding:24px 16px;background:var(--light);border-radius:8px;transition:transform .3s,box-shadow .3s}
-.diff-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
-.diff-card .icon{font-size:2.2rem;margin-bottom:12px}
-.diff-card h4{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem}
-/* SERVIÇOS */
-.services-bg{background:var(--light)}
-.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-.service-card{background:var(--white);padding:32px 24px;border-radius:8px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.06);transition:transform .3s,box-shadow .3s;border-top:3px solid transparent}
-.service-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(0,0,0,.12);border-top-color:var(--red)}
-.service-card .svc-icon{font-size:2.5rem;color:var(--red);margin-bottom:16px}
-.service-card h3{font-size:1.1rem;font-weight:700;margin-bottom:12px}
-.service-card p{font-size:.9rem;color:var(--dark);line-height:1.7}
-.services-cta{text-align:center;margin-top:40px}
-/* OBRAS */
-.obras-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.obra-item{position:relative;overflow:hidden;border-radius:8px;cursor:pointer;aspect-ratio:4/3}
-.obra-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-.obra-item:hover img{transform:scale(1.08)}
-.obra-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
-.obra-item:hover .obra-overlay{opacity:1}
-.obra-overlay span{color:var(--white);font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem;text-align:center;padding:8px}
-/* LIGHTBOX */
-.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:2000;align-items:center;justify-content:center}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:url('img/hero.jpg') center/cover no-repeat;
+  transform:scale(1.05);
+  animation:heroZoom 12s ease-in-out infinite alternate;
+}
+@keyframes heroZoom{from{transform:scale(1.05)}to{transform:scale(1.12)}}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg, rgba(0,0,0,.8) 0%, rgba(13,13,13,.7) 50%, rgba(192,57,43,.25) 100%);
+}
+.hero-grid-lines{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.hero-content{
+  position:relative;z-index:2;
+  text-align:center;max-width:860px;padding:0 24px;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.4);
+  color:var(--red-light);padding:8px 20px;border-radius:40px;
+  font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:28px;
+  backdrop-filter:blur(10px);
+  animation:fadeDown .8s ease both;
+}
+.hero-badge i{font-size:.9rem}
+.hero h1{
+  font-size:clamp(2.2rem, 5vw, 4rem);font-weight:900;
+  line-height:1.1;margin-bottom:20px;
+  animation:fadeUp .9s .1s ease both;
+}
+.hero h1 span{
+  background:linear-gradient(135deg,var(--red),var(--red-light));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero p{
+  font-size:clamp(1rem, 2vw, 1.2rem);color:rgba(255,255,255,.75);
+  margin-bottom:40px;animation:fadeUp 1s .2s ease both;
+  max-width:600px;margin-left:auto;margin-right:auto;margin-bottom:40px;
+}
+.hero-btns{
+  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp 1s .3s ease both;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:15px 32px;border-radius:50px;
+  font-family:'Inter',sans-serif;font-weight:700;font-size:.9rem;
+  cursor:pointer;transition:all .3s;border:2px solid transparent;
+  text-transform:uppercase;letter-spacing:.5px;
+}
+.btn-red{
+  background:linear-gradient(135deg,var(--red),var(--red-light));
+  color:var(--white);
+  box-shadow:0 8px 30px var(--red-glow);
+}
+.btn-red:hover{transform:translateY(-3px);box-shadow:0 14px 40px var(--red-glow)}
+.btn-glass{
+  background:rgba(255,255,255,0.08);color:var(--white);
+  border-color:rgba(255,255,255,0.2);
+  backdrop-filter:blur(10px);
+}
+.btn-glass:hover{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);transform:translateY(-3px)}
+.hero-stats{
+  position:absolute;bottom:48px;left:50%;transform:translateX(-50%);
+  display:flex;gap:48px;z-index:2;
+  animation:fadeUp 1s .5s ease both;
+}
+.hero-stat{text-align:center}
+.hero-stat .num{font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:900;color:var(--white)}
+.hero-stat .num span{color:var(--red-light)}
+.hero-stat .lbl{font-size:.75rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.scroll-indicator{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:rgba(255,255,255,.4);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;z-index:2;
+}
+.scroll-dot{width:1px;height:40px;background:linear-gradient(to bottom,rgba(255,255,255,.4),transparent);animation:scrollAnim 1.8s ease-in-out infinite}
+@keyframes scrollAnim{0%,100%{opacity:.4;transform:scaleY(0.8)}50%{opacity:1;transform:scaleY(1)}}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .7s ease,transform .7s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .7s ease,transform .7s ease}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+
+/* ===== SECTION BASE ===== */
+.section{padding:100px 0}
+.section-tag{
+  display:inline-block;
+  color:var(--red-light);font-size:.75rem;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;
+}
+.section-title h2{
+  font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;
+  line-height:1.15;margin-bottom:16px;
+}
+.section-title p{color:rgba(255,255,255,.5);font-size:1rem;max-width:520px}
+.section-title.center{text-align:center}
+.section-title.center p{margin:0 auto}
+.line{
+  width:50px;height:3px;
+  background:linear-gradient(90deg,var(--red),var(--red-light));
+  border-radius:2px;margin-bottom:20px;
+}
+.center .line{margin:0 auto 20px}
+
+/* ===== ABOUT ===== */
+.about-section{background:var(--dark)}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.about-text .section-tag{margin-bottom:10px}
+.about-text h2{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:900;margin-bottom:20px;line-height:1.2}
+.about-text p{color:rgba(255,255,255,.6);font-size:1rem;line-height:1.85;margin-bottom:16px}
+.about-features{display:flex;flex-direction:column;gap:16px;margin-top:28px}
+.about-feature{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 20px;border-radius:12px;
+  background:var(--glass);border:1px solid var(--border);
+  transition:border-color .3s,transform .3s;
+}
+.about-feature:hover{border-color:rgba(192,57,43,.4);transform:translateX(6px)}
+.about-feature .icon{
+  width:42px;height:42px;border-radius:10px;
+  background:linear-gradient(135deg,var(--red),var(--red-light));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;
+  box-shadow:0 4px 16px var(--red-glow);
+}
+.about-feature h4{font-size:.95rem;font-weight:700;margin-bottom:2px}
+.about-feature p{color:rgba(255,255,255,.5);font-size:.82rem;margin:0;line-height:1.4}
+.about-visual{position:relative}
+.about-img-main{
+  border-radius:20px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  position:relative;
+}
+.about-img-main img{width:100%;height:480px;object-fit:cover;display:block;transition:transform .6s}
+.about-img-main:hover img{transform:scale(1.04)}
+.about-img-badge{
+  position:absolute;bottom:24px;left:24px;
+  background:rgba(13,13,13,0.85);backdrop-filter:blur(20px);
+  border:1px solid var(--border);border-radius:14px;
+  padding:14px 18px;display:flex;align-items:center;gap:12px;
+}
+.about-img-badge .b-num{font-family:'Montserrat',sans-serif;font-size:1.6rem;font-weight:900;color:var(--red-light)}
+.about-img-badge .b-txt{font-size:.78rem;color:rgba(255,255,255,.6);line-height:1.4}
+
+/* ===== STATS STRIP ===== */
+.stats-strip{
+  background:linear-gradient(135deg,var(--red) 0%,#8b1a14 100%);
+  padding:60px 0;position:relative;overflow:hidden;
+}
+.stats-strip::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.05) 0%,transparent 100%);
+}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center;position:relative}
+.stat-item .num{font-family:'Montserrat',sans-serif;font-size:2.8rem;font-weight:900;color:var(--white);line-height:1}
+.stat-item .plus{color:rgba(255,255,255,.7)}
+.stat-item .lbl{font-size:.85rem;color:rgba(255,255,255,.7);margin-top:8px;font-weight:500}
+
+/* ===== SERVICES ===== */
+.services-section{background:var(--black)}
+.services-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:24px}
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.service-card{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:20px;padding:36px 28px;
+  transition:all .4s ease;
+  position:relative;overflow:hidden;
+  cursor:default;
+}
+.service-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(192,57,43,.08) 0%,transparent 100%);
+  opacity:0;transition:opacity .4s;
+}
+.service-card:hover{transform:translateY(-8px);border-color:rgba(192,57,43,.4);box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 0 1px rgba(192,57,43,.2)}
+.service-card:hover::before{opacity:1}
+.svc-icon-wrap{
+  width:60px;height:60px;border-radius:16px;
+  background:linear-gradient(135deg,rgba(192,57,43,.2),rgba(192,57,43,.05));
+  border:1px solid rgba(192,57,43,.3);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;transition:all .4s;
+}
+.service-card:hover .svc-icon-wrap{background:linear-gradient(135deg,var(--red),var(--red-light));border-color:transparent;box-shadow:0 8px 24px var(--red-glow)}
+.svc-icon-wrap i{font-size:1.5rem;color:var(--red-light);transition:color .4s}
+.service-card:hover .svc-icon-wrap i{color:var(--white)}
+.service-card h3{font-size:1.05rem;font-weight:700;margin-bottom:12px}
+.service-card p{font-size:.88rem;color:rgba(255,255,255,.5);line-height:1.75}
+
+/* ===== GALLERY ===== */
+.gallery-section{background:var(--dark)}
+.gallery-filter{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+.filter-btn{
+  padding:8px 22px;border-radius:40px;border:1px solid var(--border);
+  background:transparent;color:rgba(255,255,255,.6);
+  font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;
+  cursor:pointer;transition:all .3s;text-transform:uppercase;letter-spacing:.5px;
+}
+.filter-btn.active,.filter-btn:hover{
+  background:var(--red);border-color:var(--red);color:var(--white);
+  box-shadow:0 4px 16px var(--red-glow);
+}
+.gallery-masonry{
+  columns:3;column-gap:16px;
+}
+.gallery-item{
+  break-inside:avoid;margin-bottom:16px;
+  border-radius:14px;overflow:hidden;
+  position:relative;cursor:pointer;
+}
+.gallery-item img{
+  width:100%;display:block;
+  transition:transform .5s ease;
+}
+.gallery-item:hover img{transform:scale(1.06)}
+.gallery-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 60%);
+  opacity:0;transition:opacity .3s;
+  display:flex;align-items:flex-end;padding:20px;
+}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay-inner{display:flex;align-items:center;justify-content:space-between;width:100%}
+.gallery-overlay span{font-size:.9rem;font-weight:700;color:var(--white)}
+.gallery-overlay .zoom-icon{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--red);display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;color:var(--white);
+  box-shadow:0 4px 12px var(--red-glow);
+}
+
+/* ===== LIGHTBOX ===== */
+.lightbox{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.95);z-index:2000;
+  align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);
+}
 .lightbox.active{display:flex}
-.lightbox img{max-width:90%;max-height:85vh;border-radius:4px}
-.lightbox-close{position:absolute;top:20px;right:30px;color:var(--white);font-size:2rem;cursor:pointer;z-index:2001}
-/* CONTATO */
-.contact-section{background:var(--black);color:var(--white)}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-.contact-form{display:flex;flex-direction:column;gap:16px}
-.contact-form input,.contact-form select,.contact-form textarea{width:100%;padding:14px 16px;border:1px solid #444;border-radius:4px;background:#2a2a2a;color:var(--white);font-family:'Open Sans',sans-serif;font-size:.95rem;transition:border-color .3s}
-.contact-form input:focus,.contact-form select:focus,.contact-form textarea:focus{outline:none;border-color:var(--red)}
-.contact-form textarea{min-height:120px;resize:vertical}
-.contact-form select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:20px}
-.contact-form select option{background:#2a2a2a;color:var(--white)}
-.btn-whatsapp{background:#25D366;color:var(--white);border-color:#25D366;display:inline-flex;align-items:center;gap:8px;justify-content:center}
-.btn-whatsapp:hover{background:#1fba59}
-.contact-info{display:flex;flex-direction:column;gap:24px}
-.contact-info-item{display:flex;align-items:center;gap:14px;font-size:1.05rem}
-.contact-info-item i{font-size:1.4rem;color:var(--red);width:24px;text-align:center}
-.social-links{display:flex;gap:16px;margin-top:8px}
-.social-links a{width:44px;height:44px;border-radius:50%;border:2px solid var(--red);display:flex;align-items:center;justify-content:center;color:var(--white);transition:all .3s}
-.social-links a:hover{background:var(--red);border-color:var(--red)}
-/* FOOTER */
-.footer{background:var(--footer);color:#aaa;text-align:center;padding:40px 0}
-.footer .logo img{height:50px;margin-bottom:16px;filter:brightness(2)}
-.footer-links{display:flex;gap:24px;justify-content:center;list-style:none;margin-bottom:16px;flex-wrap:wrap}
-.footer-links a{color:#aaa;font-size:.9rem;transition:color .3s}
-.footer-links a:hover{color:var(--white)}
-.footer p{font-size:.85rem;margin-top:8px}
-/* WHATSAPP FLOAT */
-.whatsapp-float{position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:999;transition:transform .3s}
-.whatsapp-float:hover{transform:scale(1.1)}
-.whatsapp-float i{color:var(--white);font-size:1.8rem}
-/* ANIMATIONS */
-.fade-in{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
-.fade-in.visible{opacity:1;transform:translateY(0)}
-/* RESPONSIVE */
+.lightbox-content{position:relative;max-width:90%;max-height:90vh}
+.lightbox-content img{
+  max-width:100%;max-height:85vh;
+  border-radius:12px;box-shadow:0 40px 100px rgba(0,0,0,.8);
+  display:block;
+}
+.lightbox-close{
+  position:absolute;top:-44px;right:0;
+  color:rgba(255,255,255,.7);font-size:1.5rem;cursor:pointer;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s;border:1px solid var(--border);
+}
+.lightbox-close:hover{background:var(--red);color:var(--white);border-color:var(--red)}
+.lightbox-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:1px solid var(--border);
+  color:var(--white);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;transition:all .3s;
+}
+.lightbox-nav:hover{background:var(--red);border-color:var(--red)}
+.lightbox-prev{left:-60px}
+.lightbox-next{right:-60px}
+.lightbox-caption{
+  text-align:center;color:rgba(255,255,255,.6);
+  font-size:.85rem;margin-top:14px;
+}
+
+/* ===== CONTACT ===== */
+.contact-section{background:var(--black);position:relative;overflow:hidden}
+.contact-section::before{
+  content:'';position:absolute;
+  top:-200px;right:-200px;width:600px;height:600px;
+  background:radial-gradient(circle,rgba(192,57,43,.1) 0%,transparent 70%);
+  pointer-events:none;
+}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.contact-left .section-tag{margin-bottom:10px}
+.contact-left h2{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:900;margin-bottom:16px;line-height:1.2}
+.contact-left p{color:rgba(255,255,255,.5);margin-bottom:36px;font-size:.95rem}
+.contact-info-list{display:flex;flex-direction:column;gap:20px}
+.c-info{display:flex;align-items:center;gap:16px}
+.c-info-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:var(--glass);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:var(--red-light);flex-shrink:0;
+}
+.c-info-text .lbl{font-size:.75rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
+.c-info-text .val{font-size:.95rem;font-weight:600}
+.social-row{display:flex;gap:12px;margin-top:32px}
+.social-btn{
+  width:44px;height:44px;border-radius:12px;
+  border:1px solid var(--border);background:var(--glass);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.6);font-size:1.1rem;
+  transition:all .3s;
+}
+.social-btn:hover{background:var(--red);border-color:var(--red);color:var(--white);transform:translateY(-3px);box-shadow:0 8px 24px var(--red-glow)}
+
+/* FORM */
+.contact-form-wrap{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:24px;padding:40px;
+}
+.form-title{font-size:1.2rem;font-weight:700;margin-bottom:28px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.form-group label{font-size:.8rem;font-weight:600;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;padding:14px 16px;
+  border:1px solid var(--border);border-radius:12px;
+  background:rgba(255,255,255,.04);color:var(--white);
+  font-family:'Inter',sans-serif;font-size:.92rem;
+  transition:border-color .3s,background .3s;
+  outline:none;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+  border-color:var(--red);background:rgba(192,57,43,.06)
+}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.25)}
+.form-group select{appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='rgba(255,255,255,0.4)'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;background-size:20px;
+}
+.form-group select option{background:#1a1a1a}
+.form-group textarea{min-height:110px;resize:vertical}
+.btn-submit{
+  width:100%;padding:16px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,#25D366,#1da851);
+  color:var(--white);font-family:'Inter',sans-serif;
+  font-weight:700;font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:all .3s;box-shadow:0 8px 24px rgba(37,211,102,0.3);
+  letter-spacing:.5px;text-transform:uppercase;
+}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(37,211,102,0.4)}
+
+/* ===== FOOTER ===== */
+.footer{
+  background:var(--dark);border-top:1px solid var(--border);
+  padding:60px 0 32px;
+}
+.footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand .logo img{height:52px;margin-bottom:16px;filter:brightness(1.2)}
+.footer-brand p{color:rgba(255,255,255,.4);font-size:.88rem;line-height:1.7;max-width:280px}
+.footer-col h5{font-size:.8rem;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:2px;margin-bottom:20px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.footer-col ul a{color:rgba(255,255,255,.45);font-size:.88rem;transition:color .3s}
+.footer-col ul a:hover{color:var(--white)}
+.footer-bottom{
+  border-top:1px solid var(--border);padding-top:24px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+}
+.footer-bottom p{color:rgba(255,255,255,.3);font-size:.82rem}
+.footer-bottom p a{color:rgba(255,255,255,.5);transition:color .3s}
+.footer-bottom p a:hover{color:var(--white)}
+
+/* ===== WHATSAPP FLOAT ===== */
+.whatsapp-float{
+  position:fixed;bottom:28px;right:28px;
+  width:58px;height:58px;background:#25D366;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 30px rgba(37,211,102,.5);z-index:999;
+  transition:all .3s;
+}
+.whatsapp-float:hover{transform:scale(1.12);box-shadow:0 12px 40px rgba(37,211,102,.6)}
+.whatsapp-float i{color:var(--white);font-size:1.9rem}
+.whatsapp-pulse{
+  position:absolute;inset:0;border-radius:50%;
+  border:2px solid #25D366;animation:pulse 2s infinite;
+}
+@keyframes pulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.7);opacity:0}}
+
+/* ===== MOBILE ===== */
 @media(max-width:1024px){
-.services-grid{grid-template-columns:repeat(2,1fr)}
-.diff-cards{grid-template-columns:repeat(2,1fr)}
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:32px}
 }
 @media(max-width:768px){
-.nav-links{position:fixed;top:75px;left:0;width:100%;background:var(--white);flex-direction:column;padding:20px;gap:16px;box-shadow:0 4px 10px rgba(0,0,0,.1);transform:translateY(-120%);transition:transform .3s;z-index:999}
-.nav-links.active{transform:translateY(0)}
-.hamburger{display:flex}
-.header-phone{display:none}
-.hero h1{font-size:2rem}
-.hero p{font-size:1rem}
-.about-grid{grid-template-columns:1fr}
-.contact-grid{grid-template-columns:1fr}
-.obras-grid{grid-template-columns:repeat(2,1fr)}
-.diff-cards{grid-template-columns:repeat(2,1fr)}
+  .nav-links{
+    position:fixed;top:80px;left:0;width:100%;
+    background:rgba(13,13,13,.96);backdrop-filter:blur(20px);
+    flex-direction:column;padding:28px 24px;gap:20px;
+    border-bottom:1px solid var(--border);
+    transform:translateY(-120%);transition:transform .4s;z-index:999;
+  }
+  .nav-links.active{transform:translateY(0)}
+  .hamburger{display:flex}
+  .header-cta{display:none}
+  .hero-stats{gap:24px}
+  .hero-stat .num{font-size:1.5rem}
+  .about-inner{grid-template-columns:1fr;gap:40px}
+  .about-img-main img{height:320px}
+  .contact-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .gallery-masonry{columns:2}
+  .footer-inner{grid-template-columns:1fr;gap:32px}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .lightbox-prev{left:-8px}
+  .lightbox-next{right:-8px}
 }
 @media(max-width:640px){
-.obras-grid{grid-template-columns:1fr}
-.services-grid{grid-template-columns:1fr}
-.diff-cards{grid-template-columns:1fr}
-.hero h1{font-size:1.7rem}
-.btn{padding:12px 24px;font-size:.85rem}
+  .section{padding:70px 0}
+  .gallery-masonry{columns:1}
+  .services-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .hero-stats{gap:20px;flex-wrap:wrap;justify-content:center}
+  .services-header{flex-direction:column;align-items:flex-start}
 }
 </style>
 </head>
 <body>
-<!-- HEADER -->
-<header class="header" id="home">
-<div class="container">
-<a href="#home" class="logo"><img src="img/logo.png" alt="MRC Engenharia"></a>
-<nav>
-<ul class="nav-links" id="navLinks">
-<li><a href="#home">Home</a></li>
-<li><a href="#quem-somos">Quem Somos</a></li>
-<li><a href="#servicos">Serviços</a></li>
-<li><a href="#obras">Nossas Obras</a></li>
-<li><a href="#contato">Contato</a></li>
-</ul>
-</nav>
-<a href="https://wa.me/5511947830301" class="header-phone" target="_blank">
-<i class="fab fa-whatsapp"></i> (11) 94783-0301
-</a>
-<button class="hamburger" id="hamburger" aria-label="Menu">
-<span></span><span></span><span></span>
-</button>
-</div>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <div class="container">
+    <a href="#home" class="logo"><img src="img/logo.png" alt="MRC Engenharia"></a>
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#quem-somos">Quem Somos</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#obras">Nossas Obras</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+    <a href="https://wa.me/5511947830301" class="header-cta" target="_blank">
+      <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
 
-<!-- HERO -->
-<section class="hero" id="hero-section">
-<div class="hero-content">
-<h1>Pinturas e Serviços Prediais com Qualidade e Garantia</h1>
-<p>Especialistas em fachadas, condomínios e imóveis comerciais</p>
-<div class="hero-btns">
-<a href="#contato" class="btn btn-red">Solicitar Orçamento</a>
-<a href="#servicos" class="btn btn-outline">Conheça Nossos Serviços</a>
-</div>
-</div>
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><i class="fas fa-shield-alt"></i> Certificados NR-35 &mdash; SP e Grande SP</div>
+    <h1>Pinturas e Serviços Prediais com <span>Qualidade e Garantia</span></h1>
+    <p>Especialistas em fachadas, condomínios e imóveis comerciais. Mais de 500 obras entregues com excelência.</p>
+    <div class="hero-btns">
+      <a href="#contato" class="btn btn-red"><i class="fab fa-whatsapp"></i> Solicitar Orçamento</a>
+      <a href="#obras" class="btn btn-glass"><i class="fas fa-images"></i> Ver Nossas Obras</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">500<span>+</span></div><div class="lbl">Obras Realizadas</div></div>
+    <div class="hero-stat"><div class="num">10<span>+</span></div><div class="lbl">Anos de Mercado</div></div>
+    <div class="hero-stat"><div class="num">100<span>%</span></div><div class="lbl">Satisfação Garantida</div></div>
+  </div>
 </section>
 
-<!-- QUEM SOMOS -->
-<section class="section" id="quem-somos">
-<div class="container">
-<div class="about-grid fade-in">
-<div class="about-text">
-<h2>Qualidade e Agilidade em Cada Projeto</h2>
-<p>A MRC Engenharia atua no mercado de pinturas prediais e serviços de engenharia para condomínios, imóveis comerciais e residenciais de alto padrão. Nossa equipe de profissionais qualificados executa cada serviço com precisão técnica, seguindo todas as normas de segurança.</p>
-</div>
-<div class="about-img">
-<img src="img/quem-somos.jpg" alt="Profissional MRC Engenharia pintando fachada" loading="lazy">
-</div>
-</div>
-<div class="diff-cards fade-in">
-<div class="diff-card"><div class="icon">🏗️</div><h4>Equipe Especializada</h4></div>
-<div class="diff-card"><div class="icon">🔒</div><h4>Segurança NR-35</h4></div>
-<div class="diff-card"><div class="icon">✅</div><h4>Garantia por Escrito</h4></div>
-<div class="diff-card"><div class="icon">💳</div><h4>Parcelamento Disponível</h4></div>
-</div>
-</div>
+<!-- ===== QUEM SOMOS ===== -->
+<section class="section about-section" id="quem-somos">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-text reveal-left">
+        <div class="section-tag">Sobre a Empresa</div>
+        <div class="line"></div>
+        <h2>Qualidade e Agilidade em Cada Projeto</h2>
+        <p>A MRC Engenharia atua no mercado de pinturas prediais e serviços de engenharia para condomínios, imóveis comerciais e residenciais de alto padrão. Nossa equipe executa cada serviço com precisão técnica e rigor nas normas de segurança.</p>
+        <p>Utilizamos materiais de primeira linha e técnicas modernas para garantir durabilidade e acabamento impecável em todos os projetos.</p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="icon"><i class="fas fa-users"></i></div>
+            <div>
+              <h4>Equipe Especializada</h4>
+              <p>Profissionais qualificados e treinados</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="icon"><i class="fas fa-shield-alt"></i></div>
+            <div>
+              <h4>Segurança NR-35</h4>
+              <p>Certificação e equipamentos homologados</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="icon"><i class="fas fa-file-contract"></i></div>
+            <div>
+              <h4>Garantia por Escrito</h4>
+              <p>Todos os serviços com garantia documentada</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="icon"><i class="fas fa-credit-card"></i></div>
+            <div>
+              <h4>Parcelamento Disponível</h4>
+              <p>Facilidade de pagamento para seu projeto</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual reveal-right">
+        <div class="about-img-main">
+          <img src="img/quem-somos.jpg" alt="Profissional MRC Engenharia" loading="lazy">
+          <div class="about-img-badge">
+            <div class="b-num">10+</div>
+            <div class="b-txt">Anos de<br>Experiência</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- SERVIÇOS -->
-<section class="section services-bg" id="servicos">
-<div class="container">
-<div class="section-title fade-in">
-<h2>Nossos Serviços</h2>
+<!-- ===== STATS STRIP ===== -->
+<div class="stats-strip">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="num"><span id="c1">0</span><span class="plus">+</span></div>
+        <div class="lbl">Obras Concluídas</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="num"><span id="c2">0</span><span class="plus">+</span></div>
+        <div class="lbl">Clientes Satisfeitos</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="num"><span id="c3">0</span><span class="plus">+</span></div>
+        <div class="lbl">Profissionais</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="num"><span id="c4">0</span><span class="plus">%</span></div>
+        <div class="lbl">Aprovação dos Clientes</div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="services-grid fade-in">
-<div class="service-card">
-<div class="svc-icon"><i class="fas fa-paint-roller"></i></div>
-<h3>Pintura Predial</h3>
-<p>Renovação completa de fachadas e áreas comuns de condomínios e edifícios comerciais, com tintas de alta durabilidade.</p>
-</div>
-<div class="service-card">
-<div class="svc-icon"><i class="fas fa-building"></i></div>
-<h3>Restauro de Fachada</h3>
-<p>Recuperação estrutural e estética da fachada, incluindo tratamento de trincas, revestimentos e acabamentos.</p>
-</div>
-<div class="service-card">
-<div class="svc-icon"><i class="fas fa-tint-slash"></i></div>
-<h3>Impermeabilização</h3>
-<p>Aplicação de sistemas impermeabilizantes para proteção contra infiltrações em lajes, terraços e subsolos.</p>
-</div>
-<div class="service-card">
-<div class="svc-icon"><i class="fas fa-hard-hat"></i></div>
-<h3>Trabalho em Altura</h3>
-<p>Execução de serviços em fachadas com rapel e andaimes, seguindo rigorosamente as normas de segurança NR-35.</p>
-</div>
-</div>
-<div class="services-cta fade-in">
-<a href="#contato" class="btn btn-red">Solicitar Orçamento</a>
-</div>
-</div>
+
+<!-- ===== SERVIÇOS ===== -->
+<section class="section services-section" id="servicos">
+  <div class="container">
+    <div class="services-header">
+      <div class="section-title">
+        <div class="section-tag">O Que Fazemos</div>
+        <div class="line"></div>
+        <h2>Nossos Serviços</h2>
+        <p>Soluções completas em engenharia predial para o seu condomínio ou imóvel</p>
+      </div>
+      <a href="#contato" class="btn btn-red" style="flex-shrink:0"><i class="fas fa-arrow-right"></i> Solicitar Orçamento</a>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="svc-icon-wrap"><i class="fas fa-paint-roller"></i></div>
+        <h3>Pintura Predial</h3>
+        <p>Renovação completa de fachadas e áreas comuns com tintas de alta durabilidade e acabamento profissional.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="svc-icon-wrap"><i class="fas fa-building"></i></div>
+        <h3>Restauro de Fachada</h3>
+        <p>Recuperação estrutural e estética, incluindo tratamento de trincas, revestimentos e acabamentos.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="svc-icon-wrap"><i class="fas fa-tint-slash"></i></div>
+        <h3>Impermeabilização</h3>
+        <p>Proteção contra infiltrações em lajes, terraços, subsolos e áreas úmidas com sistemas modernos.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="svc-icon-wrap"><i class="fas fa-hard-hat"></i></div>
+        <h3>Trabalho em Altura</h3>
+        <p>Serviços em fachadas com rapel e andaimes, seguindo rigorosamente as normas de segurança NR-35.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- OBRAS -->
-<section class="section" id="obras">
-<div class="container">
-<div class="section-title fade-in">
-<h2>Nossas Obras</h2>
-<p>Confira alguns dos nossos projetos realizados</p>
-</div>
-<div class="obras-grid fade-in">
-<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-1.jpg" alt="Operários aplicando textura na fachada" loading="lazy"><div class="obra-overlay"><span>Texturização de Fachada</span></div></div>
-<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-2.jpg" alt="Proteção do piso com manta" loading="lazy"><div class="obra-overlay"><span>Proteção e Segurança</span></div></div>
-<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-3.jpg" alt="Fachada texturizada" loading="lazy"><div class="obra-overlay"><span>Acabamento de Fachada</span></div></div>
-<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-4.jpg" alt="Rapelista pintando fachada" loading="lazy"><div class="obra-overlay"><span>Pintura com Rapel</span></div></div>
-<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-5.jpg" alt="Rapelista na fachada" loading="lazy"><div class="obra-overlay"><span>Trabalho em Altura</span></div></div>
-<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-6.jpg" alt="Operários em rapel" loading="lazy"><div class="obra-overlay"><span>Rapel em Fachada</span></div></div>
-<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-7.jpg" alt="Pintor com rolo na fachada" loading="lazy"><div class="obra-overlay"><span>Pintura de Fachada</span></div></div>
-<div class="obra-item" onclick="openLightbox(this)"><img src="img/obra-8.jpg" alt="Pintura de muro externo" loading="lazy"><div class="obra-overlay"><span>Pintura Externa</span></div></div>
-</div>
-</div>
+<!-- ===== GALERIA / OBRAS ===== -->
+<section class="section gallery-section" id="obras">
+  <div class="container">
+    <div class="section-title center reveal" style="margin-bottom:48px">
+      <div class="section-tag">Portfólio</div>
+      <div class="line"></div>
+      <h2>Nossas Obras</h2>
+      <p>Confira alguns dos nossos projetos realizados com excelência</p>
+    </div>
+    <div class="gallery-masonry" id="galleryGrid">
+      <div class="gallery-item" data-label="Edifício Residencial" onclick="openLightbox(0)">
+        <img src="img/obra-9.jpg" alt="Edifício residencial alto" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-inner"><span>Edifício Residencial</span><div class="zoom-icon"><i class="fas fa-expand"></i></div></div></div>
+      </div>
+      <div class="gallery-item" data-label="Texturização de Fachada" onclick="openLightbox(1)">
+        <img src="img/obra-10.jpg" alt="Texturização de fachada" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-inner"><span>Texturização de Fachada</span><div class="zoom-icon"><i class="fas fa-expand"></i></div></div></div>
+      </div>
+      <div class="gallery-item" data-label="Trabalho em Altura" onclick="openLightbox(2)">
+        <img src="img/obra-11.jpg" alt="Trabalho em altura com rapel" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-inner"><span>Trabalho em Altura</span><div class="zoom-icon"><i class="fas fa-expand"></i></div></div></div>
+      </div>
+      <div class="gallery-item" data-label="Pintura de Fachada" onclick="openLightbox(3)">
+        <img src="img/obra-12.jpg" alt="Pintura de fachada com rolo" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-inner"><span>Pintura de Fachada</span><div class="zoom-icon"><i class="fas fa-expand"></i></div></div></div>
+      </div>
+      <div class="gallery-item" data-label="Rapel em Fachada" onclick="openLightbox(4)">
+        <img src="img/obra-13.jpg" alt="Rapelistas na fachada" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-inner"><span>Rapel em Fachada</span><div class="zoom-icon"><i class="fas fa-expand"></i></div></div></div>
+      </div>
+      <div class="gallery-item" data-label="Proteção e Segurança" onclick="openLightbox(5)">
+        <img src="img/obra-2.jpg" alt="Proteção do piso" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-inner"><span>Proteção e Segurança</span><div class="zoom-icon"><i class="fas fa-expand"></i></div></div></div>
+      </div>
+      <div class="gallery-item" data-label="Acabamento de Fachada" onclick="openLightbox(6)">
+        <img src="img/obra-3.jpg" alt="Acabamento de fachada" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-inner"><span>Acabamento de Fachada</span><div class="zoom-icon"><i class="fas fa-expand"></i></div></div></div>
+      </div>
+      <div class="gallery-item" data-label="Pintura com Rapel" onclick="openLightbox(7)">
+        <img src="img/obra-4.jpg" alt="Rapelista pintando" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-inner"><span>Pintura com Rapel</span><div class="zoom-icon"><i class="fas fa-expand"></i></div></div></div>
+      </div>
+      <div class="gallery-item" data-label="Pintura Externa" onclick="openLightbox(8)">
+        <img src="img/obra-7.jpg" alt="Pintura de muro externo" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-inner"><span>Pintura Externa</span><div class="zoom-icon"><i class="fas fa-expand"></i></div></div></div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-<span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-<img src="" alt="Obra MRC Engenharia" id="lightbox-img">
+<!-- ===== LIGHTBOX ===== -->
+<div class="lightbox" id="lightbox" onclick="handleLightboxClick(event)">
+  <div class="lightbox-content">
+    <div class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></div>
+    <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1);event.stopPropagation()"><i class="fas fa-chevron-left"></i></button>
+    <button class="lightbox-nav lightbox-next" onclick="navLightbox(1);event.stopPropagation()"><i class="fas fa-chevron-right"></i></button>
+    <img src="" alt="Obra MRC Engenharia" id="lightbox-img">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
 </div>
 
-<!-- CONTATO -->
+<!-- ===== CONTATO ===== -->
 <section class="section contact-section" id="contato">
-<div class="container">
-<div class="section-title fade-in">
-<h2 style="color:var(--white)">Solicite um Orçamento Gratuito</h2>
-<p style="color:#ccc">Atendemos São Paulo e Grande SP</p>
-</div>
-<div class="contact-grid fade-in">
-<form class="contact-form" id="contactForm" onsubmit="sendWhatsApp(event)">
-<input type="text" name="nome" placeholder="Nome completo" required>
-<input type="tel" name="telefone" placeholder="Telefone / WhatsApp" required>
-<input type="email" name="email" placeholder="E-mail">
-<select name="servico" required>
-<option value="" disabled selected>Tipo de Serviço</option>
-<option value="Pintura Predial">Pintura Predial</option>
-<option value="Restauro de Fachada">Restauro de Fachada</option>
-<option value="Impermeabilização">Impermeabilização</option>
-<option value="Trabalho em Altura">Trabalho em Altura</option>
-<option value="Outro">Outro</option>
-</select>
-<textarea name="mensagem" placeholder="Mensagem (opcional)"></textarea>
-<button type="submit" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Enviar pelo WhatsApp</button>
-</form>
-<div class="contact-info">
-<div class="contact-info-item"><i class="fas fa-phone-alt"></i><span>(11) 94783-0301</span></div>
-<div class="contact-info-item"><i class="fas fa-envelope"></i><span>contato@mrcengenharia.com.br</span></div>
-<div class="contact-info-item"><i class="fas fa-map-marker-alt"></i><span>São Paulo, SP</span></div>
-<div class="social-links">
-<a href="https://instagram.com/mrcengenharia" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-<a href="https://wa.me/5511947830301" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-</div>
-</div>
-</div>
-</div>
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-left reveal-left">
+        <div class="section-tag">Fale Conosco</div>
+        <div class="line"></div>
+        <h2>Solicite um Orçamento Gratuito</h2>
+        <p>Atendemos São Paulo e Grande SP. Entre em contato e receba uma proposta personalizada para o seu projeto.</p>
+        <div class="contact-info-list">
+          <div class="c-info">
+            <div class="c-info-icon"><i class="fas fa-phone-alt"></i></div>
+            <div class="c-info-text">
+              <div class="lbl">Telefone / WhatsApp</div>
+              <div class="val">(11) 94783-0301</div>
+            </div>
+          </div>
+          <div class="c-info">
+            <div class="c-info-icon"><i class="fas fa-envelope"></i></div>
+            <div class="c-info-text">
+              <div class="lbl">E-mail</div>
+              <div class="val">contato@mrcengenharia.com.br</div>
+            </div>
+          </div>
+          <div class="c-info">
+            <div class="c-info-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="c-info-text">
+              <div class="lbl">Localização</div>
+              <div class="val">São Paulo, SP</div>
+            </div>
+          </div>
+        </div>
+        <div class="social-row">
+          <a href="https://instagram.com/mrcengenharia" target="_blank" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/5511947830301" target="_blank" class="social-btn" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div class="contact-form-wrap">
+          <div class="form-title">Envie sua Mensagem</div>
+          <form id="contactForm" onsubmit="sendWhatsApp(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nome</label>
+                <input type="text" name="nome" placeholder="Seu nome completo" required>
+              </div>
+              <div class="form-group">
+                <label>Telefone</label>
+                <input type="tel" name="telefone" placeholder="(11) 99999-9999" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>E-mail</label>
+              <input type="email" name="email" placeholder="seu@email.com">
+            </div>
+            <div class="form-group">
+              <label>Tipo de Serviço</label>
+              <select name="servico" required>
+                <option value="" disabled selected>Selecione um serviço</option>
+                <option value="Pintura Predial">Pintura Predial</option>
+                <option value="Restauro de Fachada">Restauro de Fachada</option>
+                <option value="Impermeabilização">Impermeabilização</option>
+                <option value="Trabalho em Altura">Trabalho em Altura</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Mensagem</label>
+              <textarea name="mensagem" placeholder="Descreva seu projeto..."></textarea>
+            </div>
+            <button type="submit" class="btn-submit">
+              <i class="fab fa-whatsapp" style="font-size:1.3rem"></i>
+              Enviar pelo WhatsApp
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ===== FOOTER ===== -->
 <footer class="footer">
-<div class="container">
-<div class="logo"><img src="img/logo-white.png" alt="MRC Engenharia"></div>
-<ul class="footer-links">
-<li><a href="#home">Home</a></li>
-<li><a href="#quem-somos">Quem Somos</a></li>
-<li><a href="#servicos">Serviços</a></li>
-<li><a href="#obras">Nossas Obras</a></li>
-<li><a href="#contato">Contato</a></li>
-</ul>
-<p>&copy; 2025 MRC Engenharia. Todos os direitos reservados.</p>
-<p style="margin-top:4px">Desenvolvido por Lucas Lopes</p>
-</div>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo"><img src="img/logo-white.png" alt="MRC Engenharia"></div>
+        <p>Especialistas em pinturas prediais, restauro de fachadas, impermeabilização e trabalho em altura para condomínios e imóveis comerciais em São Paulo.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Navegação</h5>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#quem-somos">Quem Somos</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#obras">Nossas Obras</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Serviços</h5>
+        <ul>
+          <li><a href="#servicos">Pintura Predial</a></li>
+          <li><a href="#servicos">Restauro de Fachada</a></li>
+          <li><a href="#servicos">Impermeabilização</a></li>
+          <li><a href="#servicos">Trabalho em Altura</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 MRC Engenharia. Todos os direitos reservados.</p>
+      <p>Desenvolvido por <a href="#">Lucas Lopes</a></p>
+    </div>
+  </div>
 </footer>
 
 <!-- WHATSAPP FLOAT -->
-<a href="https://wa.me/5511947830301" class="whatsapp-float" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+<a href="https://wa.me/5511947830301" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+  <div class="whatsapp-pulse"></div>
+  <i class="fab fa-whatsapp"></i>
+</a>
 
 <script>
-// ===== PROTEÇÃO ANTI-INSPEÇÃO =====
-// Bloquear clique direito
-document.addEventListener('contextmenu',function(e){e.preventDefault();return false});
-// Bloquear atalhos de teclado (F12, Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+S)
-document.addEventListener('keydown',function(e){
-if(e.key==='F12')e.preventDefault();
-if(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j'||e.key==='C'||e.key==='c'))e.preventDefault();
-if(e.ctrlKey&&(e.key==='u'||e.key==='U'||e.key==='s'||e.key==='S'))e.preventDefault();
-if(e.key==='Escape')closeLightbox();
-});
-// Desabilitar arrastar imagens
-document.addEventListener('dragstart',function(e){if(e.target.tagName==='IMG')e.preventDefault()});
-// Desabilitar seleção de texto (exceto inputs)
-document.addEventListener('selectstart',function(e){if(e.target.tagName!=='INPUT'&&e.target.tagName!=='TEXTAREA'&&e.target.tagName!=='SELECT')e.preventDefault()});
-// Detecção de DevTools via debugger
-(function(){function d(){debugger;setTimeout(d,100)}d()})();
-// Detecção de DevTools via tamanho da janela
-var dT=false;setInterval(function(){var w=window.outerWidth-window.innerWidth>160;var h=window.outerHeight-window.innerHeight>160;if(w||h){if(!dT){dT=true;document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#1A1A1A;color:#fff;font-family:Montserrat,sans-serif;text-align:center;padding:20px"><div><h1 style="font-size:2rem;margin-bottom:16px">⚠️ Acesso Bloqueado</h1><p style="color:#aaa">Ferramentas de desenvolvedor não são permitidas neste site.</p></div></div>'}}else{if(dT){dT=false;location.reload()}}},1000);
-// Bloquear console
-var c=console;Object.defineProperty(window,'console',{get:function(){return{log:function(){},warn:function(){},error:function(){},info:function(){},debug:function(){},dir:function(){}}},set:function(){}});
+// ===== CAMADA 1: BLOQUEIO DE TECLADO =====
+document.addEventListener('contextmenu', function(e){ e.preventDefault(); return false; }, true);
+document.addEventListener('keydown', function(e){
+  // F12
+  if(e.keyCode===123){ e.preventDefault(); e.stopPropagation(); return false; }
+  // Ctrl+Shift+I / J / C / K / E / M
+  if(e.ctrlKey && e.shiftKey && [73,74,67,75,69,77].indexOf(e.keyCode) !== -1){ e.preventDefault(); e.stopPropagation(); return false; }
+  // Ctrl+U (view-source), Ctrl+S (save), Ctrl+A (select all), Ctrl+P (print)
+  if(e.ctrlKey && [85,83,65,80].indexOf(e.keyCode) !== -1){ e.preventDefault(); e.stopPropagation(); return false; }
+  // Ctrl+F (find / inspect text)
+  if(e.ctrlKey && e.keyCode===70){ e.preventDefault(); e.stopPropagation(); return false; }
+  // F5 recarregar com cache limpo (Ctrl+F5)
+  if(e.ctrlKey && e.keyCode===116){ e.preventDefault(); return false; }
+  // Lightbox nav (mantém funcionando)
+  if(e.key==='Escape') closeLightbox();
+  if(e.key==='ArrowLeft') navLightbox(-1);
+  if(e.key==='ArrowRight') navLightbox(1);
+}, true);
 
-// ===== FUNCIONALIDADES DO SITE =====
-// Hamburger
+// ===== CAMADA 2: BLOQUEAR ARRASTAR E SELECIONAR =====
+document.addEventListener('dragstart', function(e){ e.preventDefault(); }, true);
+document.addEventListener('selectstart', function(e){
+  var t = e.target.tagName;
+  if(t!=='INPUT' && t!=='TEXTAREA' && t!=='SELECT'){ e.preventDefault(); return false; }
+}, true);
+document.addEventListener('copy', function(e){ e.preventDefault(); return false; }, true);
+document.addEventListener('cut',  function(e){ e.preventDefault(); return false; }, true);
+document.addEventListener('print', function(e){ e.preventDefault(); }, true);
+
+// ===== CAMADA 3: ENVENENAR O CONSOLE =====
+(function(){
+  var noop = function(){};
+  var poison = {
+    log:noop, warn:noop, error:noop, info:noop, debug:noop,
+    dir:noop, dirxml:noop, table:noop, trace:noop, group:noop,
+    groupCollapsed:noop, groupEnd:noop, time:noop, timeEnd:noop,
+    assert:noop, clear:noop, count:noop, exception:noop, profile:noop, profileEnd:noop
+  };
+  try {
+    Object.defineProperty(window, 'console', {
+      get: function(){ return poison; },
+      set: function(){ return poison; },
+      configurable: false
+    });
+  } catch(e){}
+})();
+
+// ===== CAMADA 4: LOOP DEBUGGER (pausa DevTools automaticamente) =====
+(function _dbg(){
+  var _s = (function(){ var s = new Date(); debugger; return new Date() - s; })();
+  if(_s > 100){
+    _lock();
+  }
+  setTimeout(_dbg, 300);
+})();
+
+// ===== CAMADA 5: TELA DE BLOQUEIO =====
+var _blocked = false;
+var _BLOCKED_HTML = '<div id="blk" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0D0D0D;color:#fff;font-family:Montserrat,sans-serif;text-align:center;padding:20px;z-index:99999"><div style="max-width:420px"><div style="font-size:3rem;margin-bottom:16px">🔒</div><h1 style="font-size:1.8rem;font-weight:900;margin-bottom:12px">Acesso Restrito</h1><p style="color:#888;font-size:.95rem;line-height:1.7">As ferramentas de desenvolvedor não são permitidas neste site. Feche o inspetor para continuar navegando.</p></div></div>';
+
+function _lock(){
+  if(!_blocked){
+    _blocked = true;
+    document.body.style.overflow = 'hidden';
+    var overlay = document.createElement('div');
+    overlay.id = '__lock__';
+    overlay.innerHTML = _BLOCKED_HTML;
+    document.body.appendChild(overlay);
+  }
+}
+function _unlock(){
+  _blocked = false;
+  var el = document.getElementById('__lock__');
+  if(el) el.parentNode.removeChild(el);
+  document.body.style.overflow = '';
+}
+
+// ===== CAMADA 6: DETECÇÃO POR TAMANHO DE JANELA =====
+setInterval(function(){
+  var wDiff = window.outerWidth  - window.innerWidth  > 160;
+  var hDiff = window.outerHeight - window.innerHeight > 200;
+  if(wDiff || hDiff){
+    _lock();
+  } else {
+    if(_blocked){ _unlock(); location.reload(); }
+  }
+}, 500);
+
+// ===== CAMADA 7: DETECÇÃO VIA toString TIMING =====
+setInterval(function(){
+  var t = new Date();
+  // toString de função é interceptado pelo DevTools
+  var _dummy = /./;
+  _dummy.toString = function(){ _lock(); return ''; };
+  console.log(_dummy); // dispara o lock se DevTools estiver aberto e ativo
+  if(new Date() - t > 200){ _lock(); }
+}, 1000);
+
+// ===== CAMADA 8: MUTATION OBSERVER (impede mudanças no DOM via DevTools) =====
+(function(){
+  var _allowed = false;
+  var _mo = new MutationObserver(function(muts){
+    if(_allowed) return;
+    muts.forEach(function(m){
+      m.addedNodes.forEach(function(n){
+        // Bloqueia injeção de scripts via DevTools
+        if(n.tagName === 'SCRIPT' || n.tagName === 'LINK' || n.tagName === 'STYLE'){
+          try { n.parentNode.removeChild(n); } catch(e){}
+          _lock();
+        }
+      });
+    });
+  });
+  _mo.observe(document.documentElement, {childList:true, subtree:true});
+  // Permitir inserções legítimas por 2s no carregamento
+  _allowed = true;
+  setTimeout(function(){ _allowed = false; }, 2000);
+})();
+
+// ===== HEADER SCROLL =====
+var header=document.getElementById('header');
+window.addEventListener('scroll',function(){
+  if(window.scrollY>60){header.classList.add('scrolled')}else{header.classList.remove('scrolled')}
+});
+
+// ===== HAMBURGER =====
 var hamburger=document.getElementById('hamburger');
 var navLinks=document.getElementById('navLinks');
-hamburger.addEventListener('click',function(){hamburger.classList.toggle('active');navLinks.classList.toggle('active')});
-document.querySelectorAll('.nav-links a').forEach(function(l){l.addEventListener('click',function(){hamburger.classList.remove('active');navLinks.classList.remove('active')})});
-// Scroll animations
-var observer=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:0.15});
-document.querySelectorAll('.fade-in').forEach(function(el){observer.observe(el)});
-// Lightbox
-function openLightbox(el){var img=el.querySelector('img');document.getElementById('lightbox-img').src=img.src;document.getElementById('lightbox').classList.add('active');document.body.style.overflow='hidden'}
-function closeLightbox(){document.getElementById('lightbox').classList.remove('active');document.body.style.overflow=''}
-document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===e.currentTarget)closeLightbox()});
-// WhatsApp form
-function sendWhatsApp(e){e.preventDefault();var f=e.target;var nome=f.nome.value;var tel=f.telefone.value;var email=f.email.value;var servico=f.servico.value;var msg=f.mensagem.value;
-var text='*Orçamento MRC Engenharia*%0A%0A*Nome:* '+encodeURIComponent(nome)+'%0A*Telefone:* '+encodeURIComponent(tel)+'%0A*E-mail:* '+encodeURIComponent(email)+'%0A*Serviço:* '+encodeURIComponent(servico);
-if(msg)text+='%0A*Mensagem:* '+encodeURIComponent(msg);
-window.open('https://wa.me/5511947830301?text='+text,'_blank')}
-// Header shadow on scroll
-window.addEventListener('scroll',function(){document.querySelector('.header').style.boxShadow=window.scrollY>50?'0 2px 20px rgba(0,0,0,.12)':'0 2px 10px rgba(0,0,0,.08)'});
+hamburger.addEventListener('click',function(){
+  hamburger.classList.toggle('active');
+  navLinks.classList.toggle('active');
+});
+document.querySelectorAll('.nav-links a').forEach(function(l){
+  l.addEventListener('click',function(){
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('active');
+  });
+});
+
+// ===== SCROLL REVEAL =====
+var observer=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(function(el){observer.observe(el)});
+
+// ===== COUNTER ANIMATION =====
+var counters=[
+  {el:document.getElementById('c1'),target:500,dur:2000},
+  {el:document.getElementById('c2'),target:300,dur:2000},
+  {el:document.getElementById('c3'),target:30,dur:1800},
+  {el:document.getElementById('c4'),target:100,dur:2200}
+];
+var countersDone=false;
+var statsObserver=new IntersectionObserver(function(entries){
+  if(entries[0].isIntersecting&&!countersDone){
+    countersDone=true;
+    counters.forEach(function(c){
+      var start=0,step=c.target/60,interval=c.dur/60;
+      var timer=setInterval(function(){
+        start+=step;
+        if(start>=c.target){start=c.target;clearInterval(timer)}
+        c.el.textContent=Math.floor(start);
+      },interval);
+    });
+  }
+},{threshold:0.5});
+var statsStrip=document.querySelector('.stats-strip');
+if(statsStrip)statsObserver.observe(statsStrip);
+
+// ===== LIGHTBOX =====
+var lightboxImages=[
+  {src:'img/obra-9.jpg',label:'Edifício Residencial'},
+  {src:'img/obra-10.jpg',label:'Texturização de Fachada'},
+  {src:'img/obra-11.jpg',label:'Trabalho em Altura'},
+  {src:'img/obra-12.jpg',label:'Pintura de Fachada'},
+  {src:'img/obra-13.jpg',label:'Rapel em Fachada'},
+  {src:'img/obra-2.jpg',label:'Proteção e Segurança'},
+  {src:'img/obra-3.jpg',label:'Acabamento de Fachada'},
+  {src:'img/obra-4.jpg',label:'Pintura com Rapel'},
+  {src:'img/obra-7.jpg',label:'Pintura Externa'}
+];
+var currentLightbox=0;
+
+function openLightbox(idx){
+  currentLightbox=idx;
+  var lb=document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src=lightboxImages[idx].src;
+  document.getElementById('lightbox-caption').textContent=lightboxImages[idx].label+' ('+(idx+1)+'/'+lightboxImages.length+')';
+  lb.classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow='';
+}
+function navLightbox(dir){
+  currentLightbox=(currentLightbox+dir+lightboxImages.length)%lightboxImages.length;
+  openLightbox(currentLightbox);
+}
+function handleLightboxClick(e){
+  if(e.target===e.currentTarget||e.target.id==='lightbox')closeLightbox();
+}
+
+// ===== WHATSAPP FORM =====
+function sendWhatsApp(e){
+  e.preventDefault();
+  var f=e.target;
+  var nome=f.nome.value,tel=f.telefone.value,email=f.email.value,servico=f.servico.value,msg=f.mensagem.value;
+  var text='*Orçamento MRC Engenharia*%0A%0A*Nome:* '+encodeURIComponent(nome)+'%0A*Telefone:* '+encodeURIComponent(tel)+'%0A*E-mail:* '+encodeURIComponent(email)+'%0A*Serviço:* '+encodeURIComponent(servico);
+  if(msg)text+='%0A*Mensagem:* '+encodeURIComponent(msg);
+  window.open('https://wa.me/5511947830301?text='+text,'_blank');
+}
+
+// ===== STAGGER REVEAL DELAY =====
+document.querySelectorAll('.services-grid .service-card').forEach(function(el,i){el.style.transitionDelay=(i*0.1)+'s'});
+document.querySelectorAll('.about-feature').forEach(function(el,i){el.style.transitionDelay=(i*0.1)+'s'});
 </script>
 </body>
 </html>
